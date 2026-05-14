@@ -58,6 +58,10 @@ app.get("/verify", (req, res) => {
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("Auth Service Running");
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
