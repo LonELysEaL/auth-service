@@ -62,6 +62,39 @@ app.get("/", (req, res) => {
   res.send("Auth Service Running");
 });
 
+app.get("/test-login", (req, res) => {
+  res.send(`
+    <h2>Test Login</h2>
+
+    <button onclick="login()">
+      LOGIN
+    </button>
+
+    <pre id="result"></pre>
+
+    <script>
+      async function login() {
+
+        const response = await fetch('/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            username: 'admin',
+            password: '1234'
+          })
+        });
+
+        const data = await response.json();
+
+        document.getElementById('result').innerText =
+          JSON.stringify(data, null, 2);
+      }
+    </script>
+  `);
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
