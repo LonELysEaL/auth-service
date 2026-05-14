@@ -95,6 +95,40 @@ app.get("/test-login", (req, res) => {
   `);
 });
 
+app.get("/test-verify", (req, res) => {
+  res.send(`
+    <h2>Verify Token</h2>
+
+    <textarea id="token" rows="10" cols="80"></textarea>
+    <br><br>
+
+    <button onclick="verify()">
+      VERIFY
+    </button>
+
+    <pre id="result"></pre>
+
+    <script>
+      async function verify() {
+
+        const token =
+          document.getElementById('token').value;
+
+        const response = await fetch('/verify', {
+          headers: {
+            authorization: token
+          }
+        });
+
+        const data = await response.json();
+
+        document.getElementById('result').innerText =
+          JSON.stringify(data, null, 2);
+      }
+    </script>
+  `);
+});
+
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
